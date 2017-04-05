@@ -1,0 +1,30 @@
+{
+  "name": "my-lucien",
+  "version": "0.1.0",
+  "description": "Cliente Web de biblioteca personal",
+  "license": "MIT",
+  "devDependencies": {
+    "react-scripts": "0.9.3",
+    "semantic-ui": "^2.2.10"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-grid-system": "^2.5.0",
+    "react-redux": "^5.0.3",
+    "react-redux-form": "^1.7.0",
+    "react-router-dom": "^4.0.0-beta.6",
+    "redux": "^3.6.0",
+    "redux-form": "^6.5.0",
+    "redux-logger": "^2.8.1",
+    "redux-thunk": "^2.2.0",
+    "semantic-ui-css": "^2.2.10",
+    "semantic-ui-react": "^0.67.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
