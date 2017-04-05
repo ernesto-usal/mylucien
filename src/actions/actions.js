@@ -2,13 +2,8 @@ import fetch from 'isomorphic-fetch';
 
 /* eslint-disable guard-for-in */
 
-//-------------------------
-//-----  UTILS ----
-//-------------------------
-
-
-// Function that converts the properties of an object to x-www-form-urlencoded
-// format
+// ------------------------- -----  UTILS ---- ------------------------- Function
+// that converts the properties of an object to x-www-form-urlencoded format
 function object_to_x_www_form_urlencode(data_object) {
   let formBody = [];
   for (let property in data_object) {
@@ -25,10 +20,7 @@ let default_POST_headers = {
   'Content-Type': 'application/x-www-form-urlencoded'
 };
 
-
-//-------------------------
-//----- ACTION TYPES ------
-//-------------------------
+// ------------------------- ----- ACTION TYPES ------ -------------------------
 
 export const REQUEST_BOOKS = 'REQUEST_BOOKS';
 export const RECEIVE_BOOKS = 'RECEIVE_BOOKS';
@@ -56,14 +48,9 @@ export const SET_STATE_BOOK = "SET_STATE_BOOK";
 export const RECEIVE_RES_SET_STATE_BOOK = "RECEIVE_RES_SET_STATE_BOOK";
 export const CLEAN_CHANGE_STATE = "CLEAN_CHANGE_STATE";
 
-
-//-------------------------
-//----- BASIC ACTIONS CREATORS
-//-------------------------
-
-
-// Action Creator que devuelve el objeto con la acción para pedir la lista de
-// libros a la API
+// ------------------------- ----- BASIC ACTIONS CREATORS
+// ------------------------- Action Creator que devuelve el objeto con la acción
+// para pedir la lista de libros a la API
 function ActionCreatorRequestBooks(url_books_list) {
   return {type: REQUEST_BOOKS, url: url_books_list};
 }
@@ -168,11 +155,7 @@ function ACCleanChangeState() {
   return {type: CLEAN_CHANGE_STATE}
 }
 
-
-//-------------------------
-//----- ASYNC ACTIONS ----
-//-------------------------
-
+// ------------------------- ----- ASYNC ACTIONS ---- -------------------------
 // Action Creator Async que devuelve la función asíncrona que hace la petición y
 // devuelve la lista de libros
 function ActionCreatorFetchBooks(url_books_list) {
@@ -218,13 +201,13 @@ function ActionCreatorPostBookAsync(url_post_book, book) {
     dispatch(ActionCreatorPostBook(url_post_book, book));
     book = object_to_x_www_form_urlencode(book);
 
-      fetch(url_post_book, {
-          method: "POST",
-          headers: default_POST_headers,
-          body: book
-        })
-        .then(res => res.json())
-        .then(res => dispatch(ActionCreatorReceiveResPostBook(res)));
+    fetch(url_post_book, {
+        method: "POST",
+        headers: default_POST_headers,
+        body: book
+      })
+      .then(res => res.json())
+      .then(res => dispatch(ActionCreatorReceiveResPostBook(res)));
     /*return fetch(url_book)
       .then(req => req.json())
       .then(book_json => dispatch(ActionCreatorReceiveBookById(book_json)));*/
@@ -268,9 +251,9 @@ function ACSearchRequestGoogleBooksAsync(url) {
 function ACDeleteBookAsync(url) {
   return dispatch => {
     dispatch(ACDeleteBook(url));
-      fetch(url, {method: "DELETE"})
-        .then(res => res.json())
-        .then(res => dispatch(ACReceiveResDeleteBook(res)));
+    fetch(url, {method: "DELETE"})
+      .then(res => res.json())
+      .then(res => dispatch(ACReceiveResDeleteBook(res)));
   };
 }
 
@@ -289,9 +272,7 @@ function ACSetStateBookAsync(url, id_book, state_type, new_state) {
   };
 }
 
-//-------------------------
-//----- PUBLIC ACTIONS ----
-//-------------------------
+// ------------------------- ----- PUBLIC ACTIONS ---- -------------------------
 
 export function ActionCreatorFetchBooksIfNeeded() {
   return (dispatch, getState) => {
@@ -320,17 +301,15 @@ export function ActionCreatorPostAuthorIfNeeded() {
   };
 }
 
-export function ACSearchGoogleBooksIfNeeded() {
+export function ACSearchGoogleBooksIfNeeded(titulo, autor, isbn) {
   return (dispatch, getState) => {
-    let titulo = getState().googleBooksForm.titulo;
-    let autor = getState().googleBooksForm.autor;
-    let isbn = getState().googleBooksForm.isbn;
-    return dispatch(ACSearchRequestGoogleBooksAsync(`https://www.googleapis.com/books/v1/volumes?q=
-             ${(titulo) ? encodeURIComponent("intitle:"+titulo):""}
-                                                        ${ (autor)
-      ? encodeURIComponent("+inauthor:" + autor)
-      : ""} ${(isbn) ? encodeURIComponent("+isbn:" + isbn): ""}
-                                                    &maxResults=40`));
+    return dispatch(ACSearchRequestGoogleBooksAsync("https://www.googleapis.com/books/v1/volumes?q" + `=${ (titulo)
+      ? encodeURIComponent("intitle:" + titulo)
+      : ""}` + `${ (autor)
+        ? encodeURIComponent("+inauthor:" + autor)
+        : ""}` + `${ (isbn)
+          ? encodeURIComponent("+isbn:" + isbn)
+          : ""}` + `&maxResults=40`));
   };
 }
 

@@ -203,11 +203,6 @@ const rootReducer = combineReducers({
     authorForm: {
       nombre: "nombre_autor"
     },
-    googleBooksForm: {
-      titulo: "",
-      autor: "",
-      isbn: ""
-    }
   })
 });
 
