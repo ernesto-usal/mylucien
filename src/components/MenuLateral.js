@@ -23,13 +23,6 @@ class MenuLateral extends Component {
                     </Menu.Item>
 
                     <Menu.Item
-                        name='search-libro-coleccion'
-                        active={false}
-                        onClick={this.handleItemClick}>
-                        <Link to="/search-libro-coleccion">Buscar Libro en Coleccion</Link>
-                    </Menu.Item>
-
-                    <Menu.Item
                         name='add-author'
                         active={false}
                         onClick={this.handleItemClick}>

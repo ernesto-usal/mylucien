@@ -274,9 +274,13 @@ function ACSetStateBookAsync(url, id_book, state_type, new_state) {
 
 // ------------------------- ----- PUBLIC ACTIONS ---- -------------------------
 
-export function ActionCreatorFetchBooksIfNeeded() {
+export function ActionCreatorFetchBooksIfNeeded(title, autor, isbn, comprados, leidos) {
   return (dispatch, getState) => {
-    return dispatch(ActionCreatorFetchBooks(`http://localhost:3001/api/libros/by_autor=${getState().bookForm.autor}`));
+    //autor = getState().bookForm.autor;
+    return dispatch(ActionCreatorFetchBooks("http://localhost:3001/api/libros/"
+                                            +`${(autor)? ("by_autor=" + autor): ""}`
+                                            +`${(comprados)? ("+by_comprados=" + comprados): ""}`
+                                            +`${(leidos)? ("+by_leidos=" + leidos): ""}`));
   };
 }
 
@@ -306,7 +310,7 @@ export function ACSearchGoogleBooksIfNeeded(titulo, autor, isbn) {
     return dispatch(ACSearchRequestGoogleBooksAsync("https://www.googleapis.com/books/v1/volumes?q" + `=${ (titulo)
       ? encodeURIComponent("intitle:" + titulo)
       : ""}` + `${ (autor)
-        ? encodeURIComponent("+inauthor:" + autor)
+        ? encodeURIComponent("+inauthor:" + autor.replace(/\s+/g, ''))
         : ""}` + `${ (isbn)
           ? encodeURIComponent("+isbn:" + isbn)
           : ""}` + `&maxResults=40`));
